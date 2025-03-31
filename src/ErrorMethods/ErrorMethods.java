@@ -10,7 +10,7 @@ import ImageProcessing.ImageProcessing;
 
 import java.awt.Color;
 
-public class Error {
+public class ErrorMethods {
     // UBAH BLOK GAMBAR JADI GREYSCALE
     private static int[][] toGrayscaleMatrix(ImageProcessing imgProc) {
         int height = imgProc.getHeight();
@@ -88,6 +88,46 @@ public class Error {
         }
         return ent;
     }
+    // VARIANCE
+    public static double variance(ImageProcessing imgProc) {
+        int height = imgProc.getHeight();
+        int width = imgProc.getWidth();
+        int N = height * width;
+
+        double meanR = 0, meanG = 0, meanB = 0;
+        double varR = 0, varG = 0, varB = 0;
+
+        // Hitung mean per kanal warna
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Color pixel = imgProc.getPixel(y, x);
+                meanR += pixel.getRed();
+                meanG += pixel.getGreen();
+                meanB += pixel.getBlue();
+            }
+        }
+
+        meanR /= N;
+        meanG /= N;
+        meanB /= N;
+
+        // Hitung variansi per kanal warna
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Color pixel = imgProc.getPixel(y, x);
+                varR += Math.pow(pixel.getRed() - meanR, 2);
+                varG += Math.pow(pixel.getGreen() - meanG, 2);
+                varB += Math.pow(pixel.getBlue() - meanB, 2);
+            }
+        }
+
+        varR /= N;
+        varG /= N;
+        varB /= N;
+
+        // Variance RGB sesuai rumus di tabel
+        return (varR + varG + varB) / 3;
+    }
 
     // buat testing
     // public static void main(String[] args) {
@@ -98,10 +138,12 @@ public class Error {
     //         double madValue = Error.mad(imgProc);
     //         double maxDiff = Error.maxPixelDiff(imgProc);
     //         double entropy = Error.entropy(imgProc);
+    //         double variance = Error.variance(imgProc);
 
     //         System.out.println("MAD: " + madValue);
     //         System.out.println("Max Pixel Difference: " + maxDiff);
     //         System.out.println("Entropy: " + entropy);
+    //         System.out.println("Variance: " + variance);
 
     //     } catch (IOException e) {
     //         e.printStackTrace();
