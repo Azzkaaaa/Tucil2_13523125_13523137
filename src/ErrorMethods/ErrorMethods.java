@@ -135,10 +135,10 @@ public class ErrorMethods {
     //         BufferedImage image = ImageIO.read(new File("src/ErrorMethods/lily.jpg"));
     //         ImageProcessing imgProc = new ImageProcessing(image);
 
-    //         double madValue = Error.mad(imgProc);
-    //         double maxDiff = Error.maxPixelDiff(imgProc);
-    //         double entropy = Error.entropy(imgProc);
-    //         double variance = Error.variance(imgProc);
+    //         double madValue = ErrorMethods.mad(imgProc);
+    //         double maxDiff = ErrorMethods.maxPixelDiff(imgProc);
+    //         double entropy = ErrorMethods.entropy(imgProc);
+    //         double variance = ErrorMethods.variance(imgProc);
 
     //         System.out.println("MAD: " + madValue);
     //         System.out.println("Max Pixel Difference: " + maxDiff);
