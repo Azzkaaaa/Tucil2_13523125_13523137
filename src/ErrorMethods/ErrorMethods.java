@@ -97,7 +97,6 @@ public class ErrorMethods {
         double meanR = 0, meanG = 0, meanB = 0;
         double varR = 0, varG = 0, varB = 0;
 
-        // Hitung mean per kanal warna
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 Color pixel = imgProc.getPixel(y, x);
@@ -111,7 +110,6 @@ public class ErrorMethods {
         meanG /= N;
         meanB /= N;
 
-        // Hitung variansi per kanal warna
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 Color pixel = imgProc.getPixel(y, x);
@@ -125,7 +123,6 @@ public class ErrorMethods {
         varG /= N;
         varB /= N;
 
-        // Variance RGB sesuai rumus di tabel
         return (varR + varG + varB) / 3;
     }
 
