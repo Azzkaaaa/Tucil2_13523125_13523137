@@ -7,10 +7,14 @@ package ErrorMethods;
 // import javax.imageio.ImageIO;
 
 import ImageProcessing.ImageProcessing;
-
 import java.awt.Color;
 
 public class ErrorMethods {
+
+    public enum ErrorMethodType {
+        MAD, MAX_PIXEL_DIFF, ENTROPY, VARIANCE
+    }
+
     // UBAH BLOK GAMBAR JADI GREYSCALE
     private static int[][] toGrayscaleMatrix(ImageProcessing imgProc) {
         int height = imgProc.getHeight();
@@ -125,25 +129,4 @@ public class ErrorMethods {
 
         return (varR + varG + varB) / 3;
     }
-
-    // buat testing
-    // public static void main(String[] args) {
-    //     try {
-    //         BufferedImage image = ImageIO.read(new File("src/ErrorMethods/lily.jpg"));
-    //         ImageProcessing imgProc = new ImageProcessing(image);
-
-    //         double madValue = ErrorMethods.mad(imgProc);
-    //         double maxDiff = ErrorMethods.maxPixelDiff(imgProc);
-    //         double entropy = ErrorMethods.entropy(imgProc);
-    //         double variance = ErrorMethods.variance(imgProc);
-
-    //         System.out.println("MAD: " + madValue);
-    //         System.out.println("Max Pixel Difference: " + maxDiff);
-    //         System.out.println("Entropy: " + entropy);
-    //         System.out.println("Variance: " + variance);
-
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
 }
