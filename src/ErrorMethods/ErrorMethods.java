@@ -15,7 +15,7 @@ public class ErrorMethods {
         MAD, MAX_PIXEL_DIFF, ENTROPY, VARIANCE
     }
 
-    // UBAH BLOK GAMBAR JADI GREYSCALE
+    // ubah blok gambar jadi greyscale
     private static int[][] toGrayscaleMatrix(ImageProcessing imgProc) {
         int height = imgProc.getHeight();
         int width = imgProc.getWidth();
