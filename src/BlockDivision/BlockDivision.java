@@ -8,6 +8,7 @@ import ErrorMethods.ErrorMethods;
 import ErrorMethods.ErrorMethods.ErrorMethodType;
 import ImageProcessing.ImageProcessing;
 import QuadTree.QuadTreeNode;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class BlockDivision {
@@ -50,6 +51,23 @@ public class BlockDivision {
             case VARIANCE:
                 err = ErrorMethods.variance(imgProc);
                 break;
+            case SSIM:
+                {
+                    Color avgColor = imgProc.avgColor(0, 0, imgProc.getWidth(), imgProc.getHeight());
+
+                    BufferedImage compressedBlockImage = new BufferedImage(imgProc.getWidth(), imgProc.getHeight(), BufferedImage.TYPE_INT_RGB);
+                    for (int y = 0; y < imgProc.getHeight(); y++){
+                        for (int x = 0; x < imgProc.getWidth(); x++){
+                            compressedBlockImage.setRGB(x, y, avgColor.getRGB());
+                        }
+                    }
+
+                    ImageProcessing compressedBlock = new ImageProcessing(compressedBlockImage);
+
+                    err = ErrorMethods.ssimRGB(imgProc, compressedBlock);
+
+                    return err < threshold;
+                }
         }
 
         return err > threshold;

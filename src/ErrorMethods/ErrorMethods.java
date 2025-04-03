@@ -11,8 +11,12 @@ import java.awt.Color;
 
 public class ErrorMethods {
 
+    private static final double k1 = 0.01;
+    private static final double k2 = 0.03;
+    private static final double L = 255;
+
     public enum ErrorMethodType {
-        MAD, MAX_PIXEL_DIFF, ENTROPY, VARIANCE
+        MAD, MAX_PIXEL_DIFF, ENTROPY, VARIANCE, SSIM
     }
 
     // ubah blok gambar jadi greyscale
@@ -128,5 +132,70 @@ public class ErrorMethods {
         varB /= N;
 
         return (varR + varG + varB) / 3;
+    }
+
+
+
+    // SSIM
+    public static double ssimRGB(ImageProcessing ori, ImageProcessing comp){
+        if (ori.getWidth() != comp.getWidth() || ori.getHeight() != comp.getHeight()){
+            throw new IllegalArgumentException("Ukuran blok tidak sama untuk perhitungan SSIM.");
+        }
+
+        double ssimR = ssimChannel(ori, comp, 'R');
+        double ssimG = ssimChannel(ori, comp, 'G');
+        double ssimB = ssimChannel(ori, comp, 'B');
+
+        double wR = 1.0 / 3.0;
+        double wG = 1.0 / 3.0;
+        double wB = 1.0 / 3.0;
+
+        return wR * ssimR + wG * ssimG + wB * ssimB;
+    }
+
+    private static double ssimChannel(ImageProcessing ori, ImageProcessing comp, char channel){
+        int height = ori.getHeight();
+        int width = ori.getWidth();
+
+        int N = width * height;
+
+        double sumO = 0.0, sumC = 0.0;
+        double sumO2 = 0.0, sumC2 = 0.0;
+        double sumOC = 0.0;
+
+        for (int y = 0; y < height; y++){
+            for (int x = 0; x < width; x++){
+                Color co = ori.getPixel(y, x);
+                Color cc = comp.getPixel(y, x);
+
+                int vo = (channel == 'R') ? co.getRed() :
+                (channel == 'G') ? co.getGreen() : co.getBlue();
+
+                int vc = (channel == 'R') ? cc.getRed() :
+                (channel == 'G') ? cc.getGreen() : cc.getBlue();
+
+                sumO += vo;
+                sumC += vc;
+                sumO2 += (vo * (double) vo);
+                sumC2 += (vc * (double) vc);
+                sumOC += (vo * (double) vc);
+            }
+        }
+
+        double meanO = sumO / N;
+        double meanC = sumC / N;
+
+        double varO = (sumO2 / N) - (meanO * meanO);
+        double varC = (sumC2 / N) - (meanC * meanC);
+
+        double covOC = (sumOC / N) - (meanO * meanC);
+
+        double c1 = (k1 * L) * (k1 * L);
+        double c2 = (k2 * L) * (k2 * L);
+
+        double numerator   = (2 * meanO * meanC + c1) * (2 * covOC + c2);
+        double denominator = (meanO * meanO + meanC * meanC + c1) * (varO + varC + c2);
+
+        return numerator / denominator;
     }
 }
