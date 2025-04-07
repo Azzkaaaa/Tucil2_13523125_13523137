@@ -61,3 +61,7 @@ Program ini mengimplementasikan algoritma divide and conquer melalui struktur da
 ### 2. Conquer (Penyelesaian)
 - Ketika blok tidak perlu dibagi lagi (nilai error di bawah threshold atau ukuran blok sudah minimum), blok tersebut menjadi leaf node dalam quadtree.
 - Untuk setiap leaf node, warna rata-rata dari piksel-piksel dalam blok dihitung dan disimpan sebagai representasi dari seluruh blok.
+
+### 3. Combine (Penggabungan)
+- Setelah quadtree selesai dibangun, gambar direkonstruksi dengan mengisi setiap blok (leaf node) dengan warna rata-rata yang telah dihitung.
+- Hasil akhirnya adalah gambar yang telah dikompresi, di mana area dengan detail tinggi (heterogen) direpresentasikan dengan blok-blok kecil, sedangkan area homogen direpresentasikan dengan blok-blok besar.
