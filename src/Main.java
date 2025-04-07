@@ -1,7 +1,5 @@
 import BlockDivision.BlockDivision;
-import ErrorMethods.ErrorMethods;
 import ErrorMethods.ErrorMethods.ErrorMethodType;
-import ImageProcessing.ImageProcessing;
 import OutputImage.OutputImage;
 import QuadTree.QuadTreeBuilder;
 import java.awt.image.BufferedImage;
@@ -35,14 +33,16 @@ public class Main {
                     System.out.println("2. Max Pixel Difference");
                     System.out.println("3. Entropy");
                     System.out.println("4. Variance");
+                    System.err.println("5. Structural Similarity Index (SSIM)");
+                    System.err.println("Masukkan Pilihan (1 - 5): ");
                     methodChoice = Integer.parseInt(scanner.nextLine().trim());
-                    if (methodChoice >= 1 && methodChoice <= 4) {
+                    if (methodChoice >= 1 && methodChoice <= 5) {
                         validMethodChoice = true;
                     } else {
-                        System.out.println("Pilihan tidak valid. Silakan masukkan angka 1-4.");
+                        System.out.println("Pilihan tidak valid. Silakan masukkan angka 1 - 5.");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Input tidak valid. Silakan masukkan angka 1-4.");
+                    System.out.println("Input tidak valid. Silakan masukkan angka 1 - 5.");
                 }
             }
 
@@ -76,63 +76,66 @@ public class Main {
                 }
             }
 
-            // 5. Input target persentase kompresi
-            double targetCompression = 0;
-            boolean validCompression = false;
-            while (!validCompression) {
-                try {
-                    System.out.print("Masukkan target persentase kompresi (0 untuk nonaktif): ");
-                    targetCompression = Double.parseDouble(scanner.nextLine().trim());
-                    if (targetCompression >= 0) {
-                        validCompression = true;
-                    } else {
-                        System.out.println("Persentase kompresi tidak boleh negatif.");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Input tidak valid. Silakan masukkan nilai numerik.");
-                }
-            }
+            // // 5. Input target persentase kompresi
+            // double targetCompression = 0;
+            // boolean validCompression = false;
+            // while (!validCompression) {
+            //     try {
+            //         System.out.print("Masukkan target persentase kompresi (0 untuk nonaktif): ");
+            //         targetCompression = Double.parseDouble(scanner.nextLine().trim());
+            //         if (targetCompression >= 0) {
+            //             validCompression = true;
+            //         } else {
+            //             System.out.println("Persentase kompresi tidak boleh negatif.");
+            //         }
+            //     } catch (NumberFormatException e) {
+            //         System.out.println("Input tidak valid. Silakan masukkan nilai numerik.");
+            //     }
+            // }
 
-            // 6. Input alamat gambar hasil kompresi
+            // 5. Input alamat gambar hasil kompresi
             System.out.print("Masukkan alamat absolut gambar hasil kompresi: ");
-            String outputPath = scanner.nextLine();
+            String outputPath = scanner.nextLine().trim();
 
             // Waktu mulai eksekusi
             long startTime = System.nanoTime();
 
             // Proses konversi ke ImageProcessing
-            ImageProcessing imgProc = new ImageProcessing(originalImage);
+            // ImageProcessing imgProc = new ImageProcessing(originalImage);
 
             // Pilih metode error
             ErrorMethodType errorMethodType;
-            double computedThreshold = 0;
+            // double computedThreshold = 0;
             
             switch (methodChoice) {
                 case 1: 
                     errorMethodType = ErrorMethodType.MAD;
-                    computedThreshold = ErrorMethods.mad(imgProc); 
+                    // computedThreshold = ErrorMethods.mad(imgProc); 
                     break;
                 case 2: 
                     errorMethodType = ErrorMethodType.MAX_PIXEL_DIFF;
-                    computedThreshold = ErrorMethods.maxPixelDiff(imgProc); 
+                    // computedThreshold = ErrorMethods.maxPixelDiff(imgProc); 
                     break;
                 case 3: 
                     errorMethodType = ErrorMethodType.ENTROPY;
-                    computedThreshold = ErrorMethods.entropy(imgProc); 
+                    // computedThreshold = ErrorMethods.entropy(imgProc); 
                     break;
                 case 4: 
                     errorMethodType = ErrorMethodType.VARIANCE;
-                    computedThreshold = ErrorMethods.variance(imgProc); 
+                    // computedThreshold = ErrorMethods.variance(imgProc); 
+                    break;
+                case 5:
+                    errorMethodType = ErrorMethodType.SSIM;
                     break;
                 default: 
                     throw new IllegalArgumentException("Metode tidak valid!");
             }
 
             // Jika mode kompresi aktif, sesuaikan threshold
-            if (targetCompression > 0) {
-                threshold = computedThreshold * targetCompression;
-                System.out.println("Ambang batas yang disesuaikan: " + threshold);
-            }
+            // if (targetCompression > 0) {
+            //     threshold = computedThreshold * targetCompression;
+            //     System.out.println("Ambang batas yang disesuaikan: " + threshold);
+            // }
 
             // Bangun quadtree
             System.out.println("Membangun quadtree...");
@@ -153,8 +156,8 @@ public class Main {
             System.out.println("Waktu eksekusi: " + executionTime + " detik");
 
             // 9. Ukuran gambar sebelum
-            File originalFile = new File(inputPath);
-            long originalSize = originalFile.length();
+            // File originalFile = new File(inputPath);
+            long originalSize = inputFile.length();
             System.out.println("Ukuran gambar sebelum: " + originalSize + " bytes");
 
             // 10. Ukuran gambar setelah
