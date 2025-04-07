@@ -38,6 +38,13 @@ java Main
 ```
 
 4. Masukkan input sesuai yang diminta oleh program
+5. Setelah program selesai, informasi berikut akan ditampilkan:
+   - Waktu eksekusi
+   - Ukuran gambar sebelum dan sesudah kompresi
+   - Persentase kompresi
+   - Kedalaman pohon quadtree
+   - Jumlah simpul pada pohon
+   - Lokasi penyimpanan gambar hasil kompresi
 
 ## Struktur Program
 Program terdiri dari beberapa komponen utama:
