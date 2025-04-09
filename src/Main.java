@@ -14,7 +14,7 @@ public class Main {
 
         try {
             // 1. Input alamat gambar asli
-            System.out.print("Masukkan alamat absolut gambar yang akan dikompresi: ");
+            System.out.print("Masukkan alamat absolut gambar yang akan dikompresi (jpg, png, atau jpeg): ");
             String inputPath = scanner.nextLine();
             File inputFile = new File(inputPath);
             if (!inputFile.exists()) {
