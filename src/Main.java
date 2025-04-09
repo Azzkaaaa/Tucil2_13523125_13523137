@@ -94,7 +94,7 @@ public class Main {
             // }
 
             // 5. Input alamat gambar hasil kompresi
-            System.out.print("Masukkan alamat absolut gambar hasil kompresi: ");
+            System.out.print("Masukkan alamat absolut gambar hasil kompresi (png, jpg, atau jpeg): ");
             String outputPath = scanner.nextLine().trim();
 
             // Waktu mulai eksekusi
