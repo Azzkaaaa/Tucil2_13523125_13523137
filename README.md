@@ -23,7 +23,7 @@ Untuk menjalankan program ini, Anda memerlukan:
    - `ErrorMethods/ErrorMethods.java`
    - `ColorNormalizer/ColorNormalizer.java`
    - `OutputImage/OutputImage.java`
-   - `Main.java` (terpisah di src) 
+   - `Main.java`
 
 2. Buka terminal atau command prompt dan navigasikan ke direktori root project (direktori yang berisi folder-folder package).
 
@@ -45,6 +45,17 @@ java Main
    - Kedalaman pohon quadtree
    - Jumlah simpul pada pohon
    - Lokasi penyimpanan gambar hasil kompresi
+
+Berikut adalah nilai ambang batas untuk masing-masing metode perhitungan error:
+
+| Metode             | Ambang Batas Disarankan | Rekomendasi Default |
+|--------------------|--------------------------|----------------------|
+| MAD                | 10 - 25                  | 15                   |
+| Max Pixel Difference | 30 - 60               | 40                   |
+| Entropy            | 1.5 - 3.0                | 2.0                  |
+| Variance           | 500 - 2000               | 1000                 |
+| SSIM               | 0.75 - 0.95              | 0.90                 |
+
 
 ## Struktur Program
 Program terdiri dari beberapa komponen utama:
